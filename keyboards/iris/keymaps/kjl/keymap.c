@@ -18,10 +18,27 @@ enum custom_keycodes {
 };
 
 
+enum unicode_names {
+  AAC,
+  AEC,
+  OEC,
+  AA,
+  AE,
+  OE,
+};
 
-#define KC_AA NO_AA
-#define KC_AE NO_AE
-#define KC_OE NO_OSLH
+const uint32_t PROGMEM unicode_map[] = {
+  [AAC]  = 0x00C4,  // Ä
+  [AEC] = 0x00C5,  // Å
+  [OEC]  = 0x00D6, // Ö
+  [AA]  = 0x00E4,  // ä
+  [AE] = 0x00E5,  // å
+  [OE]  = 0x00F6, // ö
+};
+
+#define KC_AAK XP(AA, AAC)
+#define KC_AEK XP(AE, AEC)
+#define KC_OEK XP(OE, OEC)
 
 #define KC_ KC_TRNS
 #define _______ KC_TRNS
@@ -49,11 +66,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,----+----+----+----+----+----.              ,----+----+----+----+----+----.
      GESC, 1  , 2  , 3  , 4  , 5  ,                6  , 7  , 8  , 9  , 0  ,BSPC,
   //|----+----+----+----+----+----|              |----+----+----+----+----+----|
-     TAB , Q  , W  , E  , R  , T  ,                Y  , U  , I  , O  , P  , AA ,
+     TAB , Q  , W  , E  , R  , T  ,                Y  , U  , I  , O  , P  ,PIPE,
   //|----+----+----+----+----+----|              |----+----+----+----+----+----|
      LCTL, A  , S  , D  , F  , G  ,                H  , J  , K  , L  ,SCLN,QUOT,
   //|----+----+----+----+----+----+----.    ,----|----+----+----+----+----+----|
-     LSFT, Z  , X  , C  , V  , B  ,HOME,     END , N  , M  ,COMM,DOT ,SLSH,RSFT,
+     LSPO, Z  , X  , C  , V  , B  ,HOME,     END , N  , M  ,COMM,DOT ,SLSH,RSPC,
   //`----+----+----+--+-+----+----+----/    \----+----+----+----+----+----+----'
                        LALT,LOWR, SC ,         EC  ,RASE,RALT
   //                  `----+----+----'        `----+----+----'
@@ -63,9 +80,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,----+----+----+----+----+----.              ,----+----+----+----+----+----.
      TILD,EXLM, AT ,HASH,DLR ,PERC,               CIRC,AMPR,ASTR,LPRN,RPRN,BSPC,
   //|----+----+----+----+----+----|              |----+----+----+----+----+----|
-     RST , 1  , 2  , 3  , 4  , 5  ,                6  , 7  , 8  , 9  , AA , AA ,
+     RST , 1  , 2  , 3  , 4  , 5  ,                6  , 7  , 8  , 9  ,    , AAK,
   //|----+----+----+----+----+----|              |----+----+----+----+----+----|
-     DEL ,    ,LEFT,RGHT, UP ,LBRC,               RBRC, 4  , 5  , 6  , OE , AE ,
+     DEL ,    ,LEFT,RGHT, UP ,LBRC,               RBRC, 4  , 5  , 6  , OEK, AEK,
   //|----+----+----+----+----+----+----.    ,----|----+----+----+----+----+----|
      BL_S,    ,    ,    ,DOWN,LCBR,LPRN,     RPRN,RCBR, 1  , 2  , 3  ,MINS,    ,
   //`----+----+----+--+-+----+----+----/    \----+----+----+----+----+----+----'
@@ -106,6 +123,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 void persistent_default_layer_set(uint16_t default_layer) {
   eeconfig_update_default_layer(default_layer);
   default_layer_set(default_layer);
+  set_unicode_input_mode(UC_LNX);
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
