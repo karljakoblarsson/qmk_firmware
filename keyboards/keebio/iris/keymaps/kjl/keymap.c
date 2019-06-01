@@ -19,20 +19,20 @@ enum custom_keycodes {
 
 
 enum unicode_names {
-  AAC,
   AEC,
+  AAC,
   OEC,
-  AA,
   AE,
+  AA,
   OE,
 };
 
 const uint32_t PROGMEM unicode_map[] = {
-  [AAC]  = 0x00C4,  // Ä
-  [AEC] = 0x00C5,  // Å
+  [AEC]  = 0x00C4,  // Ä
+  [AAC] = 0x00C5,  // Å
   [OEC]  = 0x00D6, // Ö
-  [AA]  = 0x00E4,  // ä
-  [AE] = 0x00E5,  // å
+  [AE]  = 0x00E4,  // ä
+  [AA] = 0x00E5,  // å
   [OE]  = 0x00F6, // ö
 };
 
